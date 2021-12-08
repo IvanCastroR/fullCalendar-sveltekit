@@ -1,21 +1,22 @@
 <script>
+	import { Calendar } from '@fullcalendar/core';
+	import interactionPlugin from '@fullcalendar/interaction';
 	import { onMount } from 'svelte';
-	import FullCalendar from 'svelte-fullcalendar';
 
-	let options = { initialView: 'dayGridMonth', plugins: [] };
+	let calendarEl;
 
-	onMount(async () => {
-		options.plugins = [
-				(await import('@fullcalendar/core/vdom')).default,
-				(await import('@fullcalendar/daygrid')).default,
-				(await import('@fullcalendar/timegrid')).default,
-				(await import('@fullcalendar/interaction')).default,
-		];
+	onMount(function() {
+		let calendar = new Calendar(calendarEl, {
+			plugins: [ interactionPlugin ],
+			droppable: true
+		});
+
+		calendar.render();
 	});
 </script>
 
 <div>
 	<div>Svelte Kit FullCalendar</div>
-	<FullCalendar {options} />
+	<div bind={calendarEl}/>
 </div>
 
